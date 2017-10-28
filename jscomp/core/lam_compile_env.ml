@@ -89,7 +89,7 @@ let reset () =
    ]}
 
    Given a name, if duplicated, they should  have the same id
-   
+
 *)
 
 let js_id_name_of_hint_name (hint_name : string)  = 
@@ -98,15 +98,34 @@ let js_id_name_of_hint_name (hint_name : string)  =
     (Ext_list.map Ext_string.capitalize_ascii 
        (Ext_string.split hint_name '-')) 
 
-(* TODO: #2163 *)
-let add_js_module ~hint_name module_name : Ident.t 
+let good_hint_name module_name =
+  let len = String.length module_name in 
+  len > 0 && 
+  (function | 'a' .. 'z' | 'A' .. 'Z' -> true | _ -> false) (String.unsafe_get module_name 0) &&
+  Ext_string.for_all_from module_name 1 
+  (function 
+  | 'a' .. 'z' 
+  | 'A' .. 'Z' 
+  | '0' .. '9' 
+  | '_' 
+  | '-' ->true
+  | _ -> false)
+
+
+let add_js_module 
+  hint_name module_name : Ident.t 
   = 
   let id = 
     Ident.create @@ js_id_name_of_hint_name
-      (match hint_name with
-       | Some  hint_name
-         ->  hint_name
-       | None ->  module_name )
+    (match hint_name with 
+    | External_ffi_types.Phint_name hint_name -> hint_name
+    | External_ffi_types.Pval_name x -> 
+      if good_hint_name module_name then module_name 
+       else
+         x
+    )
+    
+
   in
   let lam_module_ident = 
     Lam_module_ident.of_external id module_name in  

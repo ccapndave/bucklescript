@@ -1,5 +1,6 @@
 'use strict';
 
+var Xxx      = require("xxx");
 var React    = require("react");
 var ReactDom = require("react-dom");
 
@@ -17,10 +18,18 @@ ReactDom.render(React.createClass({
             })
         }), document.getElementById("hi"));
 
+function f() {
+  Xxx();
+  Xxx.xx();
+  Xxx.xxx();
+  return /* () */0;
+}
+
 var v = /* () */0;
 
 var u = 33;
 
 exports.v = v;
 exports.u = u;
+exports.f = f;
 /*  Not a pure module */
