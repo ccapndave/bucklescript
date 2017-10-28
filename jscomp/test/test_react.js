@@ -1,6 +1,9 @@
 'use strict';
 
+var C        = require("c");
+var Make6    = require("b/c");
 var Xxx      = require("xxx");
+var Make4    = require("a/b/c");
 var React    = require("react");
 var ReactDom = require("react-dom");
 
@@ -22,6 +25,12 @@ function f() {
   Xxx();
   Xxx.xx();
   Xxx.xxx();
+  Make4.x();
+  Make4.y();
+  Make6.x();
+  Make6.y();
+  C.x();
+  C.y();
   return /* () */0;
 }
 
